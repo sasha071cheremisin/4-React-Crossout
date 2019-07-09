@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.js": "/4-React-Crossout/static/js/main.a3e6b5e4.chunk.js",
+    "main.js.map": "/4-React-Crossout/static/js/main.a3e6b5e4.chunk.js.map",
+    "runtime~main.js": "/4-React-Crossout/static/js/runtime~main.3509badc.js",
+    "runtime~main.js.map": "/4-React-Crossout/static/js/runtime~main.3509badc.js.map",
+    "static/js/2.db331e7c.chunk.js": "/4-React-Crossout/static/js/2.db331e7c.chunk.js",
+    "static/js/2.db331e7c.chunk.js.map": "/4-React-Crossout/static/js/2.db331e7c.chunk.js.map",
+    "index.html": "/4-React-Crossout/index.html",
+    "precache-manifest.bc70d1f45aee3a25078bd4f9c8d98e03.js": "/4-React-Crossout/precache-manifest.bc70d1f45aee3a25078bd4f9c8d98e03.js",
+    "service-worker.js": "/4-React-Crossout/service-worker.js"
+  }
+}
