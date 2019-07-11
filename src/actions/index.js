@@ -30,14 +30,22 @@ const fetchItemsList = (dispatch, crossoutService) => () => {
         })
 };
 
-const changeFilter = (value) => {
+const changeFractionFilter = (value) => {
     return {
-        type: 'CHANGE_FILTER',
+        type: 'CHANGE_FRACTION_FILTER',
+        payload: value
+    };
+};
+
+const changeRarityFilter = (value) => {
+    return {
+        type: 'CHANGE_RARITY_FILTER',
         payload: value
     };
 };
 
 export {
     fetchItemsList,
-    changeFilter
+    changeFractionFilter,
+    changeRarityFilter
 };

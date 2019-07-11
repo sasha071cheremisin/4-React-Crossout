@@ -1,21 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { changeFractionFilter } from '../../actions'
+import { changeRarityFilter } from '../../actions'
 
-const FractionFilter = ({ fractionFilter, changeFractionFilter }) => {
+const RarityFilter = ({ rarityFilter, changeRarityFilter }) => {
     const buttons = [
         { name: "All" },
-        { name: "Lunatics" },
-        { name: "Nomads" },
-        { name: "Scavanger" },
-        { name: "Steppenwolfs" },
-        { name: "Dawn's Children" },
-        { name: "Firestarters" }
+        { name: "Rare" },
+        { name: "Epic" },
+        { name: "Legendary" },
     ];
 
     const renderButtons = buttons.map(({ name }) => {
         let classNames = 'btn';
-        if (fractionFilter.indexOf(name) !== -1) {
+        if (rarityFilter.indexOf(name) !== -1) {
             classNames += ' btn-primary';
         } else {
             classNames += ' btn-secondary';
@@ -26,7 +23,7 @@ const FractionFilter = ({ fractionFilter, changeFractionFilter }) => {
                 className={classNames}
                 type="button"
                 value={name}
-                onClick={(e) => changeFractionFilter(e.target.value)}>
+                onClick={(e) => changeRarityFilter(e.target.value)}>
                 {name}
             </button>
         );
@@ -39,14 +36,14 @@ const FractionFilter = ({ fractionFilter, changeFractionFilter }) => {
     );
 };
 
-const mapStateToProps = ({ filter: { fractionFilter } }) => {
-    return { fractionFilter };
+const mapStateToProps = ({ filter: { rarityFilter } }) => {
+    return { rarityFilter };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        changeFractionFilter: (value) => dispatch(changeFractionFilter(value))
+        changeRarityFilter: (value) => dispatch(changeRarityFilter(value))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FractionFilter);
+export default connect(mapStateToProps, mapDispatchToProps)(RarityFilter);

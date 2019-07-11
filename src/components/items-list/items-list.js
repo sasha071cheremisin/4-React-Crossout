@@ -60,10 +60,18 @@ class ItemsListContainer extends Component {
         this.props.fetchItemsList();
     }
 
+    inFilter = (item,arrayTerms,term) => {
+        if (arrayTerms[0] === 'All') return true;
+
+        return arrayTerms.indexOf(item[term]) !== -1 ? true : false;
+    }
+
     filterItemsList = (item) => {
-        const { fractionFilter } = this.props;
-        if(fractionFilter[0] === 'All') return true;
-        return fractionFilter.indexOf(item.fraction) !== -1 ? true : false ;
+        const { fractionFilter, rarityFilter } = this.props;
+        const inFractionFilter = this.inFilter(item,fractionFilter,'fraction');
+        const inRarityFilter = this.inFilter(item,rarityFilter,'rarity');
+
+        return inFractionFilter && inRarityFilter;
     }
 
     render() {
@@ -82,8 +90,8 @@ class ItemsListContainer extends Component {
     }
 };
 
-const mapStateToProps = ({ itemsList: { items, loading, error }, fractionFilter }) => {
-    return { items, loading, error, fractionFilter };
+const mapStateToProps = ({ itemsList: { items, loading, error }, filter: { fractionFilter, rarityFilter } }) => {
+    return { items, loading, error, fractionFilter, rarityFilter };
 };
 
 const mapDispatchToProps = (dispatch, { crossoutService }) => {

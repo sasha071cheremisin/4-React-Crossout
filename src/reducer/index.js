@@ -1,10 +1,10 @@
 import updateItemsList from './update-items-list';
-import updateFractionFilter from './update-fraction-filter';
+import updateFilter from './update-filter';
 
 const reducer = (state, action) => {
     return {
         itemsList: updateItemsList(state, action),
-        fractionFilter: updateFractionFilter(state, action),
+        filter: updateFilter(state, action),
     }
 };
 
