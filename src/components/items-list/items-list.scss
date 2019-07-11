@@ -1,0 +1,13 @@
+.items-list {
+    &__image {
+        width: 72px;
+        height: 72px;
+    }
+
+    &__table {
+        td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    }
+}
