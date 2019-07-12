@@ -1,12 +1,12 @@
 import React from 'react';
-import ItemsList from '../items-list';
 import FiltersPage from '../filters-page';
+import ItemsListContainer from '../../containers/items-list-container/index';
 
 const App = () => {
     return (
         <div className="container">
             <FiltersPage />
-            <ItemsList />
+            <ItemsListContainer />
         </div>
     );
 };

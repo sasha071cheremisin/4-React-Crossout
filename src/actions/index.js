@@ -51,9 +51,17 @@ const changeSort = (value) => {
     };
 };
 
+const changeCraftingFormat = (value) => {
+    return {
+        type: 'CHANGE_CRAFTING_FORMAT',
+        payload: value
+    };
+};
+
 export {
     fetchItemsList,
     changeFractionFilter,
     changeRarityFilter,
-    changeSort
+    changeSort,
+    changeCraftingFormat
 };

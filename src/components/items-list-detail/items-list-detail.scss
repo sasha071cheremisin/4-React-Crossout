@@ -1,0 +1,26 @@
+.items-list-detail {
+    &__image {
+        width: 72px;
+        height: 72px;
+    }
+
+    &__price-cell {
+        display: flex;
+        align-items: center;
+        flex-wrap: nowrap;
+    }
+
+    &__price-cell-count {
+        width: 55%;
+        text-align: right;
+
+        &--not-active {
+            text-decoration: line-through;
+        }
+    }
+
+    &__price-cell-image {
+        text-align: left;
+        padding-left: 10px;
+    }
+}

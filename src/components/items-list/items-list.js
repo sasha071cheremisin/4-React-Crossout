@@ -1,58 +1,10 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { fetchItemsList, changeSort } from '../../actions';
-import withCrossoutService from '../hoc';
-import LoadingIndicator from '../loading-indicator';
-import ErrorIndicator from '../error-indicator';
+import React from 'react';
+import ItemsListDetail from '../items-list-detail';
 import './items-list.scss';
-import coinImage from '../../image/coin.png';
 
-const ItemsList = ({ items, changeSort, sort }) => {
+const ItemsList = ({ items, changeSort, sort, changeCraftingFormat, craftingFormat }) => {
     const renderItemsList = items.map((item) => (
-        <tr key={item.id}>
-            <td>
-                <img
-                    className="items-list__image"
-                    src={item.image}
-                    alt={item.name}
-                    title={item.name} />
-            </td>
-            <td>
-                <div className="items-list__price-cell">
-                    <div className="items-list__price-cell-count">{item.priceBuy}</div>
-                    <div className="items-list__price-cell-image"><img height="14" src={coinImage} alt="coin" /></div>
-                </div>
-                <div className="items-list__price-cell">
-                    <div className="items-list__price-cell-count">{item.priceSell}</div>
-                    <div className="items-list__price-cell-image"><img height="14" src={coinImage} alt="coin" /></div>
-                </div>
-            </td>
-            <td>
-                <div>{item.offersBuy}</div>
-                <div>{item.offersSell}</div>
-            </td>
-            <td>
-                <div className="items-list__price-cell">
-                    <div className="items-list__price-cell-count">{item.craftingBuy}</div>
-                    <div className="items-list__price-cell-image"><img height="14" src={coinImage} alt="coin" /></div>
-                </div>
-                <div className="items-list__price-cell">
-                    <div className="items-list__price-cell-count">{item.craftingSell}</div>
-                    <div className="items-list__price-cell-image"><img height="14" src={coinImage} alt="coin" /></div>
-                </div>
-            </td>
-            <td>
-                <div className="items-list__price-cell">
-                    <div className="items-list__price-cell-count">{item.incomeBuy}</div>
-                    <div className="items-list__price-cell-image"><img height="14" src={coinImage} alt="coin" /></div>
-                </div>
-                <div className="items-list__price-cell">
-                    <div className="items-list__price-cell-count">{item.incomeSell}</div>
-                    <div className="items-list__price-cell-image"><img height="14" src={coinImage} alt="coin" /></div>
-                </div>
-            </td>
-        </tr>
+        <ItemsListDetail item={item} key={item.id} craftingFormat={craftingFormat}/>
     ));
 
     const offersBuyClassNames =
@@ -88,7 +40,31 @@ const ItemsList = ({ items, changeSort, sort }) => {
                                 Sell
                             </span>
                         </th>
-                        <th className="align-middle text-center">Crafting<br />BuySum/SellSum</th>
+                        <th className="align-middle text-center">
+                            Crafting<br />
+                            <div className="custom-control custom-radio">
+                                <input
+                                    type="radio"
+                                    id="craftingFormat1"
+                                    name="craftingFormat"
+                                    className="custom-control-input"
+                                    value="buySum"
+                                    onChange={(e)=>changeCraftingFormat(e.target.value)}
+                                    checked={craftingFormat==='buySum'} />
+                                <label className="custom-control-label" htmlFor="craftingFormat1">BuySum /</label>
+                            </div>
+                            <div className="custom-control custom-radio">
+                                <input
+                                    type="radio"
+                                    id="craftingFormat2"
+                                    name="craftingFormat"
+                                    className="custom-control-input"
+                                    value="sellSum"
+                                    onChange={(e)=>changeCraftingFormat(e.target.value)}
+                                    checked={craftingFormat==='sellSum'} />
+                                <label className="custom-control-label" htmlFor="craftingFormat2">SellSum</label>
+                            </div>
+                        </th>
                         <th className="align-middle text-center">
                             Income<br />
                             <span
@@ -112,77 +88,4 @@ const ItemsList = ({ items, changeSort, sort }) => {
     );
 };
 
-class ItemsListContainer extends Component {
-    componentDidMount() {
-        this.props.fetchItemsList();
-    }
-
-    inFilter = (item, arrayTerms, term) => {
-        if (arrayTerms[0] === 'All') return true;
-
-        return arrayTerms.indexOf(item[term]) !== -1 ? true : false;
-    }
-
-    filterItemsList = (item) => {
-        const { fractionFilter, rarityFilter } = this.props;
-        const inFractionFilter = this.inFilter(item, fractionFilter, 'fraction');
-        const inRarityFilter = this.inFilter(item, rarityFilter, 'rarity');
-
-        return inFractionFilter && inRarityFilter;
-    }
-
-    sortItemsList = (prev, next) => {
-        const { sort } = this.props;
-
-        switch (sort) {
-            case 'offersBuy':
-                return next.offersBuy - prev.offersBuy;
-            case 'offersSell':
-                return next.offersSell - prev.offersSell;
-            case 'incomeBuy':
-                return next.incomeBuy - prev.incomeBuy;
-            case 'incomeSell':
-                return next.incomeSell - prev.incomeSell;
-            default:
-                return;
-        }
-    }
-
-    render() {
-        const { items, loading, error, changeSort, sort } = this.props;
-
-        if (loading) {
-            return <LoadingIndicator />
-        }
-
-        if (error) {
-            return <ErrorIndicator />
-        }
-        return (
-            <ItemsList
-                items={items.filter(this.filterItemsList).sort(this.sortItemsList)}
-                changeSort={changeSort}
-                sort={sort} />
-        );
-    }
-};
-
-const mapStateToProps = (
-    { itemsList: { items, loading, error },
-        filter: { fractionFilter, rarityFilter },
-        sort }) => {
-
-    return { items, loading, error, fractionFilter, rarityFilter, sort };
-};
-
-const mapDispatchToProps = (dispatch, { crossoutService }) => {
-    return {
-        fetchItemsList: fetchItemsList(dispatch, crossoutService),
-        changeSort: (value) => dispatch(changeSort(value)),
-    };
-};
-
-export default compose(
-    withCrossoutService(),
-    connect(mapStateToProps, mapDispatchToProps)
-)(ItemsListContainer);
+export default ItemsList;
