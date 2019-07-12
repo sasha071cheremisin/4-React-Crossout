@@ -12,8 +12,8 @@ export default class CrossoutService {
     ];
 
     _transformItem = (item) => {
-        const incomeBuy = (item.formatSellPrice*(0.9)) - item.formatCraftingBuySum;
-        const incomeSell = (item.formatSellPrice*(0.9)) - item.formatCraftingSellSum;
+        const incomeFromBuyPrice = (item.formatBuyPrice*(0.9)) - item.formatCraftingBuySum;
+        const incomeFromSellPrice = (item.formatSellPrice*(0.9)) - item.formatCraftingBuySum;
         return {
             id: item.id,
             name: item.name,
@@ -24,8 +24,8 @@ export default class CrossoutService {
             offersSell: item.sellOffers,
             craftingBuy: +item.formatCraftingBuySum,
             craftingSell: +item.formatCraftingSellSum,
-            incomeBuy: +incomeBuy.toFixed(2),
-            incomeSell: +incomeSell.toFixed(2),
+            incomeBuy: +incomeFromBuyPrice.toFixed(2),
+            incomeSell: +incomeFromSellPrice.toFixed(2),
             fraction: item.faction,
             rarity: item.rarityName,
         }

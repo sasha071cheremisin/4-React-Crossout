@@ -46,4 +46,19 @@
             }
         }
     }
+
+    &__sort-item {
+        transition: 0.3s;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+            color: #007bff;
+        }
+
+        &--active {
+            text-decoration: underline;
+            color: #007bff;
+        }
+    }
 }

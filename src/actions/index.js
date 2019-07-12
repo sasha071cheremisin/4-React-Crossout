@@ -44,8 +44,16 @@ const changeRarityFilter = (value) => {
     };
 };
 
+const changeSort = (value) => {
+    return {
+        type: 'CHANGE_SORT',
+        payload: value
+    };
+};
+
 export {
     fetchItemsList,
     changeFractionFilter,
-    changeRarityFilter
+    changeRarityFilter,
+    changeSort
 };

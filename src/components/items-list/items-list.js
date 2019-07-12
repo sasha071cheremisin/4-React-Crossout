@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { fetchItemsList } from '../../actions';
+import { fetchItemsList, changeSort } from '../../actions';
 import withCrossoutService from '../hoc';
 import LoadingIndicator from '../loading-indicator';
 import ErrorIndicator from '../error-indicator';
 import './items-list.scss';
 import coinImage from '../../image/coin.png';
 
-const ItemsList = ({ items }) => {
+const ItemsList = ({ items, changeSort, sort }) => {
     const renderItemsList = items.map((item) => (
         <tr key={item.id}>
             <td>
@@ -54,6 +54,20 @@ const ItemsList = ({ items }) => {
             </td>
         </tr>
     ));
+
+    const offersBuyClassNames =
+        'items-list__sort-item ' +
+        (sort === 'offersBuy' ? 'items-list__sort-item--active' : '');
+    const offersSellClassNames =
+        'items-list__sort-item ' +
+        (sort === 'offersSell' ? 'items-list__sort-item--active' : '');
+    const incomeBuyClassNames =
+        'items-list__sort-item ' +
+        (sort === 'incomeBuy' ? 'items-list__sort-item--active' : '');
+    const incomeSellClassNames =
+        'items-list__sort-item ' +
+        (sort === 'incomeSell' ? 'items-list__sort-item--active' : '');
+
     return (
         <div className="items-list">
             <table className="items-list__table table table-responsive-md table-hover">
@@ -61,9 +75,33 @@ const ItemsList = ({ items }) => {
                     <tr>
                         <th className="align-middle text-center">Image</th>
                         <th className="align-middle text-center">Price<br />Buy/Sell</th>
-                        <th className="align-middle text-center">Offers<br />Buy/Sell</th>
+                        <th className="align-middle text-center">
+                            Offers<br />
+                            <span
+                                className={offersBuyClassNames}
+                                onClick={() => changeSort('offersBuy')}>
+                                Buy
+                            </span>/
+                            <span
+                                className={offersSellClassNames}
+                                onClick={() => changeSort('offersSell')}>
+                                Sell
+                            </span>
+                        </th>
                         <th className="align-middle text-center">Crafting<br />BuySum/SellSum</th>
-                        <th className="align-middle text-center">Income<br />CraftingBuy/CraftingSell</th>
+                        <th className="align-middle text-center">
+                            Income<br />
+                            <span
+                                className={incomeBuyClassNames}
+                                onClick={() => changeSort('incomeBuy')}>
+                                fromBuyPrice
+                            </span>/
+                            <span
+                                className={incomeSellClassNames}
+                                onClick={() => changeSort('incomeSell')}>
+                                fromSellPrice
+                            </span>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -93,8 +131,25 @@ class ItemsListContainer extends Component {
         return inFractionFilter && inRarityFilter;
     }
 
+    sortItemsList = (prev, next) => {
+        const { sort } = this.props;
+
+        switch (sort) {
+            case 'offersBuy':
+                return next.offersBuy - prev.offersBuy;
+            case 'offersSell':
+                return next.offersSell - prev.offersSell;
+            case 'incomeBuy':
+                return next.incomeBuy - prev.incomeBuy;
+            case 'incomeSell':
+                return next.incomeSell - prev.incomeSell;
+            default:
+                return;
+        }
+    }
+
     render() {
-        const { items, loading, error } = this.props;
+        const { items, loading, error, changeSort, sort } = this.props;
 
         if (loading) {
             return <LoadingIndicator />
@@ -104,18 +159,26 @@ class ItemsListContainer extends Component {
             return <ErrorIndicator />
         }
         return (
-            <ItemsList items={items.filter(this.filterItemsList)} />
+            <ItemsList
+                items={items.filter(this.filterItemsList).sort(this.sortItemsList)}
+                changeSort={changeSort}
+                sort={sort} />
         );
     }
 };
 
-const mapStateToProps = ({ itemsList: { items, loading, error }, filter: { fractionFilter, rarityFilter } }) => {
-    return { items, loading, error, fractionFilter, rarityFilter };
+const mapStateToProps = (
+    { itemsList: { items, loading, error },
+        filter: { fractionFilter, rarityFilter },
+        sort }) => {
+
+    return { items, loading, error, fractionFilter, rarityFilter, sort };
 };
 
 const mapDispatchToProps = (dispatch, { crossoutService }) => {
     return {
-        fetchItemsList: fetchItemsList(dispatch, crossoutService)
+        fetchItemsList: fetchItemsList(dispatch, crossoutService),
+        changeSort: (value) => dispatch(changeSort(value)),
     };
 };
 
