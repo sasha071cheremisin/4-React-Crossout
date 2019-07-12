@@ -10,4 +10,40 @@
             vertical-align: middle;
         }
     }
+
+    &__price-cell {
+        display: flex;
+        align-items: center;
+        flex-wrap: nowrap;
+    }
+
+    &__price-cell-count {
+        width: 55%;
+        text-align: right;
+    }
+
+    &__price-cell-image {
+        text-align: left;
+        padding-left: 10px;
+    }
+
+    &__thead {
+        th {
+            position: sticky;
+            top: -1px;
+            background: white;
+            border: 0 !important;
+            padding: 10px 0;
+
+            &:before {
+                content: '';
+                display: block;
+                background: #dee2e6;
+                height: 2px;
+                width: 100%;
+                position: absolute;
+                bottom: 0;
+            }
+        }
+    }
 }

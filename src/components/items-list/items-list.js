@@ -6,6 +6,7 @@ import withCrossoutService from '../hoc';
 import LoadingIndicator from '../loading-indicator';
 import ErrorIndicator from '../error-indicator';
 import './items-list.scss';
+import coinImage from '../../image/coin.png';
 
 const ItemsList = ({ items }) => {
     const renderItemsList = items.map((item) => (
@@ -18,20 +19,38 @@ const ItemsList = ({ items }) => {
                     title={item.name} />
             </td>
             <td>
-                <div>{item.priceBuy}</div>
-                <div>{item.priceSell}</div>
+                <div className="items-list__price-cell">
+                    <div className="items-list__price-cell-count">{item.priceBuy}</div>
+                    <div className="items-list__price-cell-image"><img height="14" src={coinImage} alt="coin" /></div>
+                </div>
+                <div className="items-list__price-cell">
+                    <div className="items-list__price-cell-count">{item.priceSell}</div>
+                    <div className="items-list__price-cell-image"><img height="14" src={coinImage} alt="coin" /></div>
+                </div>
             </td>
             <td>
                 <div>{item.offersBuy}</div>
                 <div>{item.offersSell}</div>
             </td>
             <td>
-                <div>{item.craftingBuy}</div>
-                <div>{item.craftingSell}</div>
+                <div className="items-list__price-cell">
+                    <div className="items-list__price-cell-count">{item.craftingBuy}</div>
+                    <div className="items-list__price-cell-image"><img height="14" src={coinImage} alt="coin" /></div>
+                </div>
+                <div className="items-list__price-cell">
+                    <div className="items-list__price-cell-count">{item.craftingSell}</div>
+                    <div className="items-list__price-cell-image"><img height="14" src={coinImage} alt="coin" /></div>
+                </div>
             </td>
             <td>
-                <div>{item.incomeBuy}</div>
-                <div>{item.incomeSell}</div>
+                <div className="items-list__price-cell">
+                    <div className="items-list__price-cell-count">{item.incomeBuy}</div>
+                    <div className="items-list__price-cell-image"><img height="14" src={coinImage} alt="coin" /></div>
+                </div>
+                <div className="items-list__price-cell">
+                    <div className="items-list__price-cell-count">{item.incomeSell}</div>
+                    <div className="items-list__price-cell-image"><img height="14" src={coinImage} alt="coin" /></div>
+                </div>
             </td>
         </tr>
     ));
@@ -60,7 +79,7 @@ class ItemsListContainer extends Component {
         this.props.fetchItemsList();
     }
 
-    inFilter = (item,arrayTerms,term) => {
+    inFilter = (item, arrayTerms, term) => {
         if (arrayTerms[0] === 'All') return true;
 
         return arrayTerms.indexOf(item[term]) !== -1 ? true : false;
@@ -68,8 +87,8 @@ class ItemsListContainer extends Component {
 
     filterItemsList = (item) => {
         const { fractionFilter, rarityFilter } = this.props;
-        const inFractionFilter = this.inFilter(item,fractionFilter,'fraction');
-        const inRarityFilter = this.inFilter(item,rarityFilter,'rarity');
+        const inFractionFilter = this.inFilter(item, fractionFilter, 'fraction');
+        const inRarityFilter = this.inFilter(item, rarityFilter, 'rarity');
 
         return inFractionFilter && inRarityFilter;
     }
