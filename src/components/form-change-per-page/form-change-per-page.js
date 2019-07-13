@@ -8,6 +8,7 @@ const FormChangePerPage = ({changePerPage}) => {
         <div className='form-change-per-page'>
             <div className='form-change-per-page__text'>Show</div>
             <select className="form-change-per-page__select form-control" onChange={(e)=>changePerPage(e.target.value)}>
+                <option>5</option>
                 <option>10</option>
                 <option>20</option>
                 <option>50</option>
