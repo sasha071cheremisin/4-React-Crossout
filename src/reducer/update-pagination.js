@@ -1,3 +1,9 @@
+const updatePerPage = (state,value) => {
+    const newValue = Number(value);
+    const itemsLength = state.itemsList.items.length;
+    return Number.isNaN(newValue) ? itemsLength : newValue;
+}
+
 const updatePagination = (state, action) => {
     if (state === undefined) {
         return {
@@ -16,7 +22,7 @@ const updatePagination = (state, action) => {
         case 'CHANGE_PER_PAGE':
             return {
                 ...state.paginationItemsList,
-                perPage: action.payload
+                perPage: updatePerPage(state,action.payload)
             };
 
         default:
