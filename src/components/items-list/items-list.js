@@ -1,11 +1,32 @@
 import React from 'react';
 import ItemsListDetail from '../items-list-detail';
+import Pagination from '../pagination';
 import './items-list.scss';
 
-const ItemsList = ({ items, changeSort, sort, changeCraftingFormat, craftingFormat }) => {
-    const renderItemsList = items.map((item) => (
-        <ItemsListDetail item={item} key={item.id} craftingFormat={craftingFormat}/>
-    ));
+const ItemsList = (props) => {
+    const {
+        items,
+        changeSort,
+        sort,
+        changeCraftingFormat,
+        craftingFormat,
+        paginationItemsList: { perPage, currentPage },
+        changeCurrentPage } = props;
+
+    const pages = Math.ceil(items.length / perPage);
+    const startOffset = (currentPage - 1) * perPage;
+    let startCount = 0;
+
+    const filterPagination = (item,index) => {
+        if (index >= startOffset && startCount < perPage) {
+            startCount++;
+            return true;
+        }
+        return false;
+    }
+    const renderItemsList = items.filter(filterPagination).map((item, index) => {
+        return <ItemsListDetail item={item} key={item.id} craftingFormat={craftingFormat} />;
+    });
 
     const offersBuyClassNames =
         'items-list__sort-item ' +
@@ -49,8 +70,8 @@ const ItemsList = ({ items, changeSort, sort, changeCraftingFormat, craftingForm
                                     name="craftingFormat"
                                     className="custom-control-input"
                                     value="buySum"
-                                    onChange={(e)=>changeCraftingFormat(e.target.value)}
-                                    checked={craftingFormat==='buySum'} />
+                                    onChange={(e) => changeCraftingFormat(e.target.value)}
+                                    checked={craftingFormat === 'buySum'} />
                                 <label className="custom-control-label" htmlFor="craftingFormat1">BuySum /</label>
                             </div>
                             <div className="custom-control custom-radio">
@@ -60,8 +81,8 @@ const ItemsList = ({ items, changeSort, sort, changeCraftingFormat, craftingForm
                                     name="craftingFormat"
                                     className="custom-control-input"
                                     value="sellSum"
-                                    onChange={(e)=>changeCraftingFormat(e.target.value)}
-                                    checked={craftingFormat==='sellSum'} />
+                                    onChange={(e) => changeCraftingFormat(e.target.value)}
+                                    checked={craftingFormat === 'sellSum'} />
                                 <label className="custom-control-label" htmlFor="craftingFormat2">SellSum</label>
                             </div>
                         </th>
@@ -84,6 +105,7 @@ const ItemsList = ({ items, changeSort, sort, changeCraftingFormat, craftingForm
                     {renderItemsList}
                 </tbody>
             </table>
+            <Pagination countPages={pages} currentPage={currentPage} changePage={changeCurrentPage} />
         </div>
     );
 };

@@ -58,10 +58,26 @@ const changeCraftingFormat = (value) => {
     };
 };
 
+const changeCurrentPage = (value) => {
+    return {
+        type: 'CHANGE_CURRENT_PAGE',
+        payload: value
+    };
+};
+
+const changePerPage = (value) => {
+    return {
+        type: 'CHANGE_PER_PAGE',
+        payload: value
+    };
+};
+
 export {
     fetchItemsList,
     changeFractionFilter,
     changeRarityFilter,
     changeSort,
-    changeCraftingFormat
+    changeCraftingFormat,
+    changeCurrentPage,
+    changePerPage
 };

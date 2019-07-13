@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import LoadingIndicator from '../../components/loading-indicator';
 import ErrorIndicator from '../../components/error-indicator';
 import ItemsList from '../../components/items-list/index';
-import { fetchItemsList, changeSort, changeCraftingFormat } from '../../actions';
+import { fetchItemsList, changeSort, changeCraftingFormat, changeCurrentPage, changePerPage } from '../../actions';
 import withCrossoutService from '../../components/hoc';
 
 class ItemsListContainer extends Component {
@@ -44,7 +44,16 @@ class ItemsListContainer extends Component {
     }
 
     render() {
-        const { items, loading, error, changeSort, sort, changeCraftingFormat, craftingFormat } = this.props;
+        const {
+            items,
+            loading,
+            error,
+            changeSort,
+            sort,
+            changeCraftingFormat,
+            craftingFormat,
+            paginationItemsList,
+            changeCurrentPage } = this.props;
 
         if (loading) {
             return <LoadingIndicator />
@@ -53,13 +62,16 @@ class ItemsListContainer extends Component {
         if (error) {
             return <ErrorIndicator />
         }
+
         return (
             <ItemsList
                 items={items.filter(this.filterItemsList).sort(this.sortItemsList)}
                 changeSort={changeSort}
                 sort={sort}
                 changeCraftingFormat={changeCraftingFormat}
-                craftingFormat={craftingFormat} />
+                craftingFormat={craftingFormat}
+                paginationItemsList={paginationItemsList}
+                changeCurrentPage={changeCurrentPage} />
         );
     }
 };
@@ -68,9 +80,18 @@ const mapStateToProps = (
     { itemsList: { items, loading, error },
         filter: { fractionFilter, rarityFilter },
         sort,
-        craftingFormat }) => {
+        craftingFormat,
+        paginationItemsList }) => {
 
-    return { items, loading, error, fractionFilter, rarityFilter, sort, craftingFormat };
+    return {
+        items,
+        loading,
+        error,
+        fractionFilter,
+        rarityFilter,
+        sort,
+        craftingFormat,
+        paginationItemsList };
 };
 
 const mapDispatchToProps = (dispatch, { crossoutService }) => {
@@ -78,6 +99,8 @@ const mapDispatchToProps = (dispatch, { crossoutService }) => {
         fetchItemsList: fetchItemsList(dispatch, crossoutService),
         changeSort: (value) => dispatch(changeSort(value)),
         changeCraftingFormat: (value) => dispatch(changeCraftingFormat(value)),
+        changeCurrentPage: (value) => dispatch(changeCurrentPage(value)),
+        changePerPage: (value) => dispatch(changePerPage(value)),
     };
 };
 
