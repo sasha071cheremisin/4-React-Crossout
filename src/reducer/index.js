@@ -5,7 +5,6 @@ import updateCraftingFormat from './update-crafting-format';
 import updatePagination from './update-pagination';
 
 const reducer = (state, action) => {
-    console.log(action)
     return {
         itemsList: updateItemsList(state, action),
         filter: updateFilter(state, action),
