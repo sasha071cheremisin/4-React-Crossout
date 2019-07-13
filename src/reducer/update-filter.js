@@ -35,7 +35,8 @@ const updateFilter = (state, action) => {
     if (state === undefined) {
         return {
             rarityFilter: ["All"],
-            fractionFilter: ["All"]
+            fractionFilter: ["All"],
+            searchTerm: ''
         };
     }
 
@@ -54,6 +55,12 @@ const updateFilter = (state, action) => {
             return {
                 ...state.filter,
                 rarityFilter: updateTerms(rarityFilter, action.payload)
+            };
+
+        case 'CHANGE_SEARCH_TERM':
+            return {
+                ...state.filter,
+                searchTerm: action.payload
             };
 
         default:

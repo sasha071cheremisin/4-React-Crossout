@@ -72,6 +72,13 @@ const changePerPage = (value) => {
     };
 };
 
+const changeSearchTerm = (value) => {
+    return {
+        type: 'CHANGE_SEARCH_TERM',
+        payload: value
+    };
+};
+
 export {
     fetchItemsList,
     changeFractionFilter,
@@ -79,5 +86,6 @@ export {
     changeSort,
     changeCraftingFormat,
     changeCurrentPage,
-    changePerPage
+    changePerPage,
+    changeSearchTerm
 };

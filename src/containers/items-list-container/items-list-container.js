@@ -26,6 +26,14 @@ class ItemsListContainer extends Component {
         return inFractionFilter && inRarityFilter;
     }
 
+    searchFilter = (item) => {
+        const { searchTerm } = this.props;
+        const findTerm =
+            item.name.toLowerCase()
+            .indexOf(searchTerm.toLowerCase()) !== -1 ? true : false;
+        return findTerm;
+    }
+
     sortItemsList = (prev, next) => {
         const { sort } = this.props;
 
@@ -65,7 +73,7 @@ class ItemsListContainer extends Component {
 
         return (
             <ItemsList
-                items={items.filter(this.filterItemsList).sort(this.sortItemsList)}
+                items={items.filter(this.filterItemsList).filter(this.searchFilter).sort(this.sortItemsList)}
                 changeSort={changeSort}
                 sort={sort}
                 changeCraftingFormat={changeCraftingFormat}
@@ -78,7 +86,7 @@ class ItemsListContainer extends Component {
 
 const mapStateToProps = (
     { itemsList: { items, loading, error },
-        filter: { fractionFilter, rarityFilter },
+        filter: { fractionFilter, rarityFilter,searchTerm },
         sort,
         craftingFormat,
         paginationItemsList }) => {
@@ -91,7 +99,8 @@ const mapStateToProps = (
         rarityFilter,
         sort,
         craftingFormat,
-        paginationItemsList };
+        paginationItemsList,
+        searchTerm };
 };
 
 const mapDispatchToProps = (dispatch, { crossoutService }) => {
