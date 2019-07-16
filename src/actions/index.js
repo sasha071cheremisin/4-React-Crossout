@@ -79,6 +79,37 @@ const changeSearchTerm = (value) => {
     };
 };
 
+const marketItemsLoaded = (newMarketItem) => {
+    return {
+        type: 'FETCH_MARKET_ITEMS_REQUEST',
+        payload: newMarketItem
+    };
+};
+
+const marketItemsRequested = () => {
+    return {
+        type: 'FETCH_MARKET_ITEMS_SUCCESS'
+    };
+};
+
+const marketItemsError = (error) => {
+    return {
+        type: 'FETCH_MARKET_ITEMS_FAILURE',
+        payload: error
+    };
+};
+
+const fetchMarketItems = (dispatch, crossoutService) => (id) => {
+    dispatch(marketItemsRequested());
+    crossoutService.getMarketItem(id)
+        .then((data) => {
+            dispatch(marketItemsLoaded(data));
+        })
+        .catch((err) => {
+            dispatch(marketItemsError(err));
+        })
+};
+
 export {
     fetchItemsList,
     changeFractionFilter,
@@ -87,5 +118,6 @@ export {
     changeCraftingFormat,
     changeCurrentPage,
     changePerPage,
-    changeSearchTerm
+    changeSearchTerm,
+    fetchMarketItems
 };

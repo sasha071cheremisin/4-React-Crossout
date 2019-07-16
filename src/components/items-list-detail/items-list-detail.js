@@ -2,7 +2,7 @@ import React from 'react';
 import coinImage from '../../image/coin.png';
 import './items-list-detail.scss';
 
-const ItemsListDetail = ({ item, craftingFormat }) => {
+const ItemsListDetail = ({ item, craftingFormat, fetchMarketItems }) => {
     const defaultClassNames = 'items-list-detail__price-cell-count';
     const craftingBuyClassNames =
         defaultClassNames + ' ' +
@@ -18,7 +18,8 @@ const ItemsListDetail = ({ item, craftingFormat }) => {
                     className="items-list-detail__image"
                     src={item.image}
                     alt={item.name}
-                    title={item.name} />
+                    title={item.name}
+                    onClick={()=>fetchMarketItems(item.id)} />
             </td>
             <td>
                 <div className="items-list-detail__price-cell">

@@ -31,6 +31,18 @@ export default class CrossoutService {
         }
     }
 
+    _transformMarketItem = (item) => {
+        return {
+            id: item[0],
+            sellprice: item[1],
+            buyprice: item[2],
+            selloffers: item[3],
+            buyorders: item[4],
+            datetime: item[5],
+            datetimeUNIX: item[6],
+        };
+    }
+
     _filterGetResourse = ({faction}) => {
         return this._factionNames.includes(faction);
     }
@@ -49,5 +61,11 @@ export default class CrossoutService {
         const res = await this.getResourse(`/items/`);
         console.log('res -',res);
         return res.filter(this._filterGetResourse).map(this._transformItem);
+    }
+
+    getMarketItem = async (id) => {
+        const res = await this.getResourse(`/market-all/${id}`);
+
+        return res.map(this._transformMarketItem);
     }
 }

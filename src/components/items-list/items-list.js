@@ -11,7 +11,8 @@ const ItemsList = (props) => {
         changeCraftingFormat,
         craftingFormat,
         paginationItemsList: { perPage, currentPage },
-        changeCurrentPage } = props;
+        changeCurrentPage,
+        fetchMarketItems } = props;
 
     const pages = Math.ceil(items.length / perPage);
     const startOffset = (currentPage - 1) * perPage;
@@ -25,7 +26,11 @@ const ItemsList = (props) => {
         return false;
     }
     const renderItemsList = items.filter(filterPagination).map((item, index) => {
-        return <ItemsListDetail item={item} key={item.id} craftingFormat={craftingFormat} />;
+        return <ItemsListDetail
+            item={item}
+            key={item.id}
+            craftingFormat={craftingFormat}
+            fetchMarketItems={fetchMarketItems} />;
     });
 
     const offersBuyClassNames =

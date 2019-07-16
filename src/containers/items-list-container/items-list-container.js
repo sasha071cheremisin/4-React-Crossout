@@ -4,8 +4,14 @@ import { compose } from 'redux';
 import LoadingIndicator from '../../components/loading-indicator';
 import ErrorIndicator from '../../components/error-indicator';
 import ItemsList from '../../components/items-list/index';
-import { fetchItemsList, changeSort, changeCraftingFormat, changeCurrentPage, changePerPage } from '../../actions';
 import withCrossoutService from '../../components/hoc';
+import {
+    fetchItemsList,
+    changeSort,
+    changeCraftingFormat,
+    changeCurrentPage,
+    changePerPage,
+    fetchMarketItems } from '../../actions';
 
 class ItemsListContainer extends Component {
     componentDidMount() {
@@ -61,7 +67,8 @@ class ItemsListContainer extends Component {
             changeCraftingFormat,
             craftingFormat,
             paginationItemsList,
-            changeCurrentPage } = this.props;
+            changeCurrentPage,
+            fetchMarketItems } = this.props;
 
         if (loading) {
             return <LoadingIndicator />
@@ -79,7 +86,8 @@ class ItemsListContainer extends Component {
                 changeCraftingFormat={changeCraftingFormat}
                 craftingFormat={craftingFormat}
                 paginationItemsList={paginationItemsList}
-                changeCurrentPage={changeCurrentPage} />
+                changeCurrentPage={changeCurrentPage}
+                fetchMarketItems={fetchMarketItems} />
         );
     }
 };
@@ -110,6 +118,7 @@ const mapDispatchToProps = (dispatch, { crossoutService }) => {
         changeCraftingFormat: (value) => dispatch(changeCraftingFormat(value)),
         changeCurrentPage: (value) => dispatch(changeCurrentPage(value)),
         changePerPage: (value) => dispatch(changePerPage(value)),
+        fetchMarketItems: fetchMarketItems(dispatch, crossoutService)
     };
 };
 
