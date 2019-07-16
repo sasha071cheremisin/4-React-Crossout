@@ -47,14 +47,14 @@ const ItemsList = (props) => {
                 <thead className="items-list__thead">
                     <tr>
                         <th className="align-middle text-center">Image</th>
-                        <th className="align-middle text-center">Price<br />Buy/Sell</th>
+                        <th className="align-middle text-center">Price<br />Buy /<br />Sell</th>
                         <th className="align-middle text-center">
                             Offers<br />
                             <span
                                 className={offersBuyClassNames}
                                 onClick={() => changeSort('offersBuy')}>
                                 Buy
-                            </span>/
+                            </span> /<br />
                             <span
                                 className={offersSellClassNames}
                                 onClick={() => changeSort('offersSell')}>
@@ -92,7 +92,7 @@ const ItemsList = (props) => {
                                 className={incomeBuyClassNames}
                                 onClick={() => changeSort('incomeBuy')}>
                                 fromBuyPrice
-                            </span>/
+                            </span> /<br />
                             <span
                                 className={incomeSellClassNames}
                                 onClick={() => changeSort('incomeSell')}>
