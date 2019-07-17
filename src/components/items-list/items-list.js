@@ -12,7 +12,8 @@ const ItemsList = (props) => {
         craftingFormat,
         paginationItemsList: { perPage, currentPage },
         changeCurrentPage,
-        fetchMarketItems } = props;
+        updateCurrentMarketId,
+        toggleModalWindow } = props;
 
     const pages = Math.ceil(items.length / perPage);
     const startOffset = (currentPage - 1) * perPage;
@@ -30,7 +31,8 @@ const ItemsList = (props) => {
             item={item}
             key={item.id}
             craftingFormat={craftingFormat}
-            fetchMarketItems={fetchMarketItems} />;
+            updateCurrentMarketId={updateCurrentMarketId}
+            toggleModalWindow={toggleModalWindow} />;
     });
 
     const offersBuyClassNames =

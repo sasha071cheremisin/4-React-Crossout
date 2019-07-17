@@ -79,10 +79,10 @@ const changeSearchTerm = (value) => {
     };
 };
 
-const marketItemsLoaded = (newMarketItem) => {
+const marketItemsLoaded = (data,itemId) => {
     return {
         type: 'FETCH_MARKET_ITEMS_REQUEST',
-        payload: newMarketItem
+        payload: {itemId,data}
     };
 };
 
@@ -103,11 +103,24 @@ const fetchMarketItems = (dispatch, crossoutService) => (id) => {
     dispatch(marketItemsRequested());
     crossoutService.getMarketItem(id)
         .then((data) => {
-            dispatch(marketItemsLoaded(data));
+            dispatch(marketItemsLoaded(data,id));
         })
         .catch((err) => {
             dispatch(marketItemsError(err));
         })
+};
+
+const updateCurrentMarketId = (itemId) => {
+    return {
+        type: 'UPDATE_CURRENT_MARKET_ID',
+        payload: itemId
+    };
+};
+
+const toggleModalWindow = () => {
+    return {
+        type: 'TOGGLE_MODAL_WINDOW',
+    };
 };
 
 export {
@@ -119,5 +132,7 @@ export {
     changeCurrentPage,
     changePerPage,
     changeSearchTerm,
-    fetchMarketItems
+    fetchMarketItems,
+    updateCurrentMarketId,
+    toggleModalWindow
 };

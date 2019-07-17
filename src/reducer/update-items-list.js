@@ -17,7 +17,7 @@ const updateItemsList = (state, action) => {
     if (state === undefined) {
         return {
             items: [],
-            loading: true,
+            loading: false,
             error: null
         }
     }
@@ -43,11 +43,13 @@ const updateItemsList = (state, action) => {
                 loading: false,
                 error: action.payload
             };
+
         case 'CHANGE_CRAFTING_FORMAT':
             return {
                 ...state,
                 items: changeItemsIncome(state,action.payload)
             };
+
         default:
             return state.itemsList;
     }
