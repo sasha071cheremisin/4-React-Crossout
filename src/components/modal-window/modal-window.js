@@ -25,15 +25,17 @@ const ModalWindow = (props) => {
 
     return (
         <div className="modal-window" onClick={(e) => clickModalWindow(e)}>
-            <div className="modal-window__content container">
-                <div className="modal-window__toolbar">
-                    <button
-                        className="modal-window__hide btn btn-outline-primary"
-                        onClick={() => toggleModalWindow()} >
-                        <i className="fa fa-minus-circle"></i>
-                    </button>
+            <div className="modal-window__container container">
+                <div className="modal-window__content ">
+                    <div className="modal-window__toolbar">
+                        <button
+                            className="modal-window__hide btn btn-outline-primary"
+                            onClick={() => toggleModalWindow()} >
+                            <i className="fa fa-minus-circle"></i>
+                        </button>
+                    </div>
+                    {children}
                 </div>
-                {children}
             </div>
         </div>
     );

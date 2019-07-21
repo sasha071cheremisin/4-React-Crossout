@@ -1,13 +1,12 @@
 import React from 'react';
+import Graph from '../graph';
 import './item-detail-info.scss';
 
-const ItemDetailInfo = ({ data }) => {
-    console.log('ItemDetailInfo', data);
+const ItemDetailInfo = ({data}) => {
     return (
         <div className="item-detail-info">
             <div className="item-detail-info__content container">
-                ItemDetailInfo
-
+                <Graph data={data}/>
             </div>
         </div>
     );

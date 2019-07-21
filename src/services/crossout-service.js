@@ -34,12 +34,12 @@ export default class CrossoutService {
     _transformMarketItem = (item) => {
         return {
             id: item[0],
-            sellprice: item[1],
-            buyprice: item[2],
-            selloffers: item[3],
-            buyorders: item[4],
-            datetime: item[5],
-            datetimeUNIX: item[6],
+            sellPrice: item[1]/100,
+            buyPrice: item[2]/100,
+            sellOffers: item[3],
+            buyOrders: item[4],
+            dateTime: item[5],
+            dateTimeUNIX: item[6],
         };
     }
 
