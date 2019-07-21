@@ -2,7 +2,8 @@ CrossoutDB API -> https://github.com/Zicore/CrossoutMarket <br>
 
 # Here is the live demo <a target="_blank" href="https://sasha071cheremisin.github.io/4-React-Crossout/" style="font-size: 40px">CLICK TO SEE DEMO</a>
 
-![alt-text](https://sasha071cheremisin.github.io/4-React-Crossout/blob/master/crossout.png)
+![alt-text](https://sasha071cheremisin.github.io/4-React-Crossout/blob/master/crossout-1.png)
+![alt-text](https://sasha071cheremisin.github.io/4-React-Crossout/blob/master/crossout-2.png)
 
 ### `npm start`
 
